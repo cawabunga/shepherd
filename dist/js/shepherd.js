@@ -717,10 +717,6 @@ var Tour = (function (_Evented2) {
             previous: this.currentStep
           });
 
-          if (this.currentStep) {
-            this.currentStep.hide();
-          }
-
           this.currentStep = next;
           next.show();
         }
