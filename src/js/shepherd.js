@@ -412,12 +412,19 @@ class Step extends Evented {
 
     if (this.options.buttons) {
       const footer = document.createElement('footer');
-      let buttons = createFromHTML("<ul class='shepherd-buttons'></ul>");
+      const buttons = createFromHTML("<ul class='shepherd-buttons'></ul>");
 
       this.options.buttons.map(cfg => {
-        const button = createFromHTML(`<li><a class='shepherd-button ${ cfg.classes || '' }'>${ cfg.text }</a>`);
-        buttons.appendChild(button);
-        this.bindButtonEvents(cfg, button.querySelector('a'));
+        const buttonWrapper = createFromHTML(`<li></li>`);
+
+        const classes = `shepherd-button ${cfg.classes}`;
+        const button = cfg.element ? cfg.element(this, buttonWrapper, cfg.text, classes) :
+                                     createFromHTML(`<a class="${classes}">${ cfg.text }</a>`);
+
+        buttonWrapper.appendChild(button);
+        buttons.appendChild(buttonWrapper);
+
+        this.bindButtonEvents(cfg, button);
       });
 
       footer.appendChild(buttons);

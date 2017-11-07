@@ -464,9 +464,15 @@ var Step = (function (_Evented) {
           var buttons = createFromHTML("<ul class='shepherd-buttons'></ul>");
 
           _this5.options.buttons.map(function (cfg) {
-            var button = createFromHTML('<li><a class=\'shepherd-button ' + (cfg.classes || '') + '\'>' + cfg.text + '</a>');
-            buttons.appendChild(button);
-            _this5.bindButtonEvents(cfg, button.querySelector('a'));
+            var buttonWrapper = createFromHTML('<li></li>');
+
+            var classes = 'shepherd-button ' + cfg.classes;
+            var button = cfg.element ? cfg.element(_this5, buttonWrapper, cfg.text, classes) : createFromHTML('<a class="' + classes + '">' + cfg.text + '</a>');
+
+            buttonWrapper.appendChild(button);
+            buttons.appendChild(buttonWrapper);
+
+            _this5.bindButtonEvents(cfg, button);
           });
 
           footer.appendChild(buttons);
