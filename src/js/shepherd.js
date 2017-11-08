@@ -264,8 +264,12 @@ class Step extends Evented {
       }],
       target: opts.element,
       offset: opts.offset || '0 0',
-      attachment: attachment
+      attachment: attachment,
     };
+
+      if (!isUndefined(opts.targetAttachment)) {
+          tetherOpts.targetAttachment = opts.targetAttachment;
+      }
 
     if (this.tether) {
       this.tether.destroy();

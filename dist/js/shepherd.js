@@ -294,6 +294,10 @@ var Step = (function (_Evented) {
         attachment: attachment
       };
 
+      if (!isUndefined(opts.targetAttachment)) {
+        tetherOpts.targetAttachment = opts.targetAttachment;
+      }
+
       if (this.tether) {
         this.tether.destroy();
       }
